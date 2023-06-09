@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,7 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class signup extends AppCompatActivity {
+public class Signup extends AppCompatActivity {
 
     TextInputEditText emailText,passwordText;
     Button button_signup;
@@ -55,11 +54,11 @@ public class signup extends AppCompatActivity {
                 password_s = String.valueOf(passwordText.getText());
 
                 if(TextUtils.isEmpty(email_s)){
-                    Toast.makeText(signup.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Signup.this, "Enter email", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(TextUtils.isEmpty(password_s)){
-                    Toast.makeText(signup.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Signup.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -69,14 +68,14 @@ public class signup extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    Toast.makeText(signup.this, "Account created",
+                                    Toast.makeText(Signup.this, "Account created",
                                             Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(signup.this, "Authentication failed.",
+                                    Toast.makeText(Signup.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
