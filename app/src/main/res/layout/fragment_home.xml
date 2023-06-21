@@ -11,14 +11,14 @@
         android:id="@+id/add_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="183dp"
-        android:layout_marginEnd="172dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="355dp"
+        android:layout_marginEnd="2dp"
         android:layout_marginBottom="7dp"
         android:backgroundTint="@color/white"
-        android:src="@drawable/baseline_add_24" />
+        android:src="@drawable/baseline_add_24"
+    />
 
     <!--    <Button-->
 <!--        android:id="@+id/add_button"-->
