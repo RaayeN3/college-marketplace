@@ -1,8 +1,15 @@
 package com.example.trialapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,24 +20,30 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class Item_Details extends AppCompatActivity {
 
     EditText prod_name,prod_desc,prod_price;
     ImageButton save_item;
-    //ImageView img_up;
+    ImageView img_up;
+    String imgurl;
 
 //    ProgressBar prog;
     DatabaseReference itemdbref;
 
 //    StorageReference img_ref;
 //
-//    Uri imageUri;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +51,7 @@ public class Item_Details extends AppCompatActivity {
         setContentView(R.layout.item_details);
 
 
-//        img_up = findViewById(R.id.item_img);
+        img_up = findViewById(R.id.item_img);
         prod_name=findViewById(R.id.item_name);
         prod_desc=findViewById(R.id.item_desc);
         prod_price=findViewById(R.id.item_price);
@@ -47,55 +60,111 @@ public class Item_Details extends AppCompatActivity {
 
         itemdbref= FirebaseDatabase.getInstance().getReference().child("items");
 
-//        img_ref = FirebaseStorage.getInstance().getReference();
-        save_item.setOnClickListener( (v)->add_item());
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK){
+                            Intent data = result.getData();
+                            uri = data.getData();
+                            img_up.setImageURI(uri);
+                        } else {
+                            Toast.makeText(Item_Details.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
 
-//        img_up.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent galleryIntent = new Intent();
-//                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-//                galleryIntent.setType("image/*");
-//                startActivityForResult(galleryIntent,2);
-//            }
-//        });
-
-
+        //save_item.setOnClickListener( (v)->add_item());
+        img_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+                photoPicker.setType("image/*");
+                activityResultLauncher.launch(photoPicker);
+            }
+        });
+        save_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveData();
+            }
+        });
+    }
+    public void saveData(){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
+                .child(uri.getLastPathSegment());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Item_Details.this);
+        builder.setCancelable(false);
+        //builder.setView(R.layout.progress_layout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                while (!uriTask.isComplete());
+                Uri urlImage = uriTask.getResult();
+                imgurl = urlImage.toString();
+                uploadData();
+                dialog.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                dialog.dismiss();
+            }
+        });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
 //
-//        if (requestCode ==2 && resultCode == RESULT_OK && data != null){
+
+//    void add_item(){
+//        String item_n=prod_name.getText().toString();
+//        String item_d=prod_desc.getText().toString();
+//        String item_p=prod_price.getText().toString();
 //
-//            imageUri = data.getData();
-//            img_up.setImageURI(imageUri);
-//
+//        if(item_n==null||item_n.isEmpty()){
+//            prod_name.setError("Product name required");
+//            return;
 //        }
-//    }
+//        if(item_p==null||item_p.isEmpty()){
+//            prod_name.setError("Product price required");
+//            return;
+//        }
+//
+//        Item item=new Item();
+//        item.setName(item_n);
+//        item.setDescription(item_d);
+//        item.setPrice(item_p);
+//
+//        itemdbref.push().setValue(item);
+//        Toast.makeText(Item_Details.this,"Item added",Toast.LENGTH_SHORT).show();
+public void uploadData(){
+    String item_n=prod_name.getText().toString();
+    String item_d=prod_desc.getText().toString();
+    String item_p=prod_price.getText().toString();
 
-    void add_item(){
-        String item_n=prod_name.getText().toString();
-        String item_d=prod_desc.getText().toString();
-        String item_p=prod_price.getText().toString();
-
-        if(item_n==null||item_n.isEmpty()){
-            prod_name.setError("Product name required");
-            return;
-        }
-        if(item_p==null||item_p.isEmpty()){
-            prod_name.setError("Product price required");
-            return;
-        }
-
-        Item item=new Item();
-        item.setName(item_n);
-        item.setDescription(item_d);
-        item.setPrice(item_p);
-
-        itemdbref.push().setValue(item);
-        Toast.makeText(Item_Details.this,"Item added",Toast.LENGTH_SHORT).show();
+    Item item=new Item( item_n, item_d,item_p,imgurl);
+    //We are changing the child from title to currentDate,
+    // because we will be updating title as well and it may affect child value.
+//    String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+    FirebaseDatabase.getInstance().getReference().child("items")
+            .setValue(item).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(Item_Details.this, "Saved", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Item_Details.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
     }
 }

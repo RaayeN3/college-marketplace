@@ -7,19 +7,21 @@ public class Item {
     String description;
     String price;
 
-//    String dataimg;
+    String urlimg;
 
 
-
-
-    public Item() {
+    public Item(String name, String description, String price, String urlimg) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.urlimg = urlimg;
     }
 
-//    public String getDataimg() { return dataimg; }
-//
-//    public void setDataimg(String dataimg) {
-//        this.dataimg = dataimg;
-//    }
+    public String getUrlimg() { return urlimg; }
+
+    public void setUrlimg(String urlimg) {
+        this.urlimg = urlimg;
+    }
 
     public String getName() {
         return name;
