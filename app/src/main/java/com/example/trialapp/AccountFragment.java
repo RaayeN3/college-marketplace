@@ -48,6 +48,7 @@ public class AccountFragment extends Fragment {
                     FirebaseAuth.getInstance().signOut();
                     Intent intent = new Intent(getActivity(), Login.class);
                     startActivity(intent);
+                    getActivity().finish();
 
                 }
             }

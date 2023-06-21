@@ -14,4 +14,5 @@
     <string name="your_adds">Your adds</string>
     <string name="account_settings">Account Settings</string>
     <string name="logout">LOGOUT</string>
+    <string name="add_button">Add</string>
 </resources>
