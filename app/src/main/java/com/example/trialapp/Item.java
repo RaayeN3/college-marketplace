@@ -8,6 +8,9 @@ public class Item {
     String price;
 
     String urlimg;
+    public Item(){
+
+    }
 
 
     public Item(String name, String description, String price, String urlimg) {

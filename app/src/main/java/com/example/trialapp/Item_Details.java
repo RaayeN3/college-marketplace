@@ -1,13 +1,5 @@
 package com.example.trialapp;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -17,14 +9,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -147,8 +144,6 @@ public void uploadData(){
     String item_p=prod_price.getText().toString();
 
     Item item=new Item( item_n, item_d,item_p,imgurl);
-    //We are changing the child from title to currentDate,
-    // because we will be updating title as well and it may affect child value.
 //    String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
     itemdbref.push().setValue(item).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
