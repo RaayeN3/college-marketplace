@@ -7,9 +7,9 @@
 <!--    <item android:title="Chat"-->
 <!--        android:icon="@drawable/baseline_chat_24"-->
 <!--        android:id="@+id/chat"/>-->
-    <item android:title="Cart"
-        android:icon="@drawable/baseline_shopping_cart_24"
-        android:id="@+id/cart"/>
+    <item android:title="My Ads"
+        android:icon="@drawable/baseline_favorite_24"
+        android:id="@+id/myads"/>
     <item android:title="Account"
         android:icon="@drawable/baseline_account_circle_24"
         android:id="@+id/account"/>

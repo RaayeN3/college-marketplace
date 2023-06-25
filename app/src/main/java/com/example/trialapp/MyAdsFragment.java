@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 
 
- public class CartFragment extends Fragment {
+ public class MyAdsFragment extends Fragment {
 
 
 
@@ -18,6 +18,6 @@ import android.view.ViewGroup;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        return inflater.inflate(R.layout.fragment_myads, container, false);
     }
 }
