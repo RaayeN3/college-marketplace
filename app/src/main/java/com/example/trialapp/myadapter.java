@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +26,15 @@ public class myadapter extends FirebaseRecyclerAdapter<Item,myadapter.myviewhold
         holder.productdescription.setText(model.getDescription());
         holder.productprice.setText(model.getPrice());
         Glide.with(holder.img1.getContext()).load(model.getUrlimg()).into(holder.img1);
+
+            holder.img1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new descFragment(model.getUrlimg(),model.getName(),model.getDescription(),model.getPrice())).addToBackStack(null).commit();
+
+                }
+            });
 
     }
 
