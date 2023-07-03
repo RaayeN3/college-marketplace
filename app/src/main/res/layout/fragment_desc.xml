@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".descFragment">
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:id="@+id/nameholder"
             android:text="Product Name"
             android:textSize="25sp"
-            android:textStyle="bold"
+            android:gravity="center"
             android:textColor="#FFFFFF"/>
 
         <TextView
@@ -35,6 +36,7 @@
             android:layout_marginTop="10dp"
             android:id="@+id/descriptionholder"
             android:text="Product Description"
+            android:gravity="center"
             android:textSize="25sp"
             android:textColor="#FFFFFF"/>
 
@@ -44,15 +46,23 @@
             android:layout_marginTop="10dp"
             android:id="@+id/priceholder"
             android:text="Product Price"
+            android:textStyle="bold"
+            android:gravity="center"
             android:textSize="25sp"
             android:textColor="#FFFFFF"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginVertical="20dp"
             android:id="@+id/call_button"
-            android:text="Call"/>
+            android:text="Call Seller"
+
+
+            />
+<!--            android:background="@drawable/custom_button"-->
+
 
     </LinearLayout>
 

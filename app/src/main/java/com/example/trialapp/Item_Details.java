@@ -22,8 +22,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -34,6 +38,7 @@ public class Item_Details extends AppCompatActivity {
     ImageButton save_item;
     ImageView img_up;
     String imgurl;
+    FirebaseAuth auth;
 
 //    ProgressBar prog;
     DatabaseReference itemdbref;
@@ -47,13 +52,12 @@ public class Item_Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_details);
 
-
         img_up = findViewById(R.id.item_img);
         prod_name=findViewById(R.id.item_name);
         prod_desc=findViewById(R.id.item_desc);
         prod_price=findViewById(R.id.item_price);
         save_item=findViewById(R.id.save_btn);
-
+        auth = FirebaseAuth.getInstance();
 
         itemdbref= FirebaseDatabase.getInstance().getReference().child("items");
 
@@ -115,7 +119,6 @@ public class Item_Details extends AppCompatActivity {
         });
     }
 
-//
 
 //    void add_item(){
 //        String item_n=prod_name.getText().toString();
@@ -142,23 +145,43 @@ public void uploadData(){
     String item_n=prod_name.getText().toString();
     String item_d=prod_desc.getText().toString();
     String item_p=prod_price.getText().toString();
+    String get_uid=auth.getCurrentUser().getUid();
+    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+    usersRef.child(get_uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()) {
+                String phoneNumber = dataSnapshot.child("phonenumber").getValue(String.class);
+                Item item=new Item( item_n, item_d,item_p,imgurl,phoneNumber);
 
-    Item item=new Item( item_n, item_d,item_p,imgurl);
-//    String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-    itemdbref.push().setValue(item).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
-                        Toast.makeText(Item_Details.this, "Saved", Toast.LENGTH_SHORT).show();
-                        finish();
+                itemdbref.push().setValue(item).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(Item_Details.this, "Saved", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Item_Details.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Item_Details.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        }
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Toast.makeText(getApplicationContext(),"error in loading", Toast.LENGTH_SHORT);
+        }
+    });
+
+
+
+
+
+//    String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
 
     }
 }

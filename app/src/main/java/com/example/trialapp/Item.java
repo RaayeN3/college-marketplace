@@ -6,6 +6,7 @@ public class Item {
     String name;
     String description;
     String price;
+    String Number;
 
     String urlimg;
     public Item(){
@@ -13,10 +14,11 @@ public class Item {
     }
 
 
-    public Item(String name, String description, String price, String urlimg) {
+    public Item(String name, String description, String price, String urlimg,String Number) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.Number=Number;
         this.urlimg = urlimg;
     }
 
@@ -49,6 +51,14 @@ public class Item {
     public void setPrice(String price) {
         this.price = price;
     }
+    public String getNumber() {
+        return Number;
+    }
+
+    public void setNumber(String Number) {
+        this.Number= Number;
+    }
+
 
 
 }

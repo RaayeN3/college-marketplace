@@ -14,9 +14,9 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-public class myadapter extends FirebaseRecyclerAdapter<Item,myadapter.myviewholder> {
+public class adsadapter extends FirebaseRecyclerAdapter<Item,adsadapter.myviewholder> {
 
-    public myadapter(@NonNull FirebaseRecyclerOptions<Item> options) {
+    public adsadapter(@NonNull FirebaseRecyclerOptions<Item> options) {
         super(options);
     }
 
@@ -28,21 +28,21 @@ public class myadapter extends FirebaseRecyclerAdapter<Item,myadapter.myviewhold
         String num=model.getNumber();
         Glide.with(holder.img1.getContext()).load(model.getUrlimg()).into(holder.img1);
 
-            holder.img1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AppCompatActivity activity=(AppCompatActivity)view.getContext();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new descFragment(model.getUrlimg(),model.getName(),model.getDescription(),model.getPrice(), model.getNumber())).addToBackStack(null).commit();
+        holder.img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new descFragment(model.getUrlimg(),model.getName(),model.getDescription(),model.getPrice(), model.getNumber())).addToBackStack(null).commit();
 
-                }
-            });
+            }
+        });
 
     }
 
     @NonNull
     @Override
     public myviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerow,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowads,parent,false);
         return new myviewholder(view);
     }
 

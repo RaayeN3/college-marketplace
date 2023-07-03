@@ -1,9 +1,12 @@
 package com.example.trialapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,16 +25,18 @@ public class descFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    String url,name,descr,price;
+    String url,name,descr,price, phonenum;
+    Button call;
 
     public descFragment() {
 
     }
-    public descFragment(String url,String name,String descr,String price) {
+    public descFragment(String url,String name,String descr,String price,String phonenum) {
         this.url=url;
         this.name=name;
         this.descr=descr;
         this.price=price;
+        this.phonenum = phonenum;
 
     }
 
@@ -63,12 +68,22 @@ public class descFragment extends Fragment {
         TextView descriptionholder=vi.findViewById(R.id.descriptionholder);
         TextView priceholder=vi.findViewById(R.id.priceholder);
 
+        call = vi.findViewById(R.id.call_button);
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL); intent.setData(Uri.parse("tel:" + phonenum)); startActivity(intent);
+            }
+        });
+
         nameholder.setText(name);
         descriptionholder.setText(descr);
         priceholder.setText(price);
         Glide.with(getContext()).load(url).into(imageholder);
         return vi;
     }
+
     public void onBackPressed(){
 
         AppCompatActivity activity=(AppCompatActivity)getContext();
