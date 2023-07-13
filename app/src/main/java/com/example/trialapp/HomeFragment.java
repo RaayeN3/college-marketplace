@@ -14,20 +14,14 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 //import com.google.firebase.database.FirebaseDatabase;
-
-
 public class HomeFragment extends Fragment {
 
-
-    //Button add_ele;
     FloatingActionButton add_item_btn;
     RecyclerView rv;
     myadapter adapter;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View vi = inflater.inflate(R.layout.fragment_home, container, false);
         add_item_btn= vi.findViewById(R.id.add_item);
@@ -54,8 +48,6 @@ public class HomeFragment extends Fragment {
 
         adapter=new myadapter(options);
         rv.setAdapter(adapter);
-
-
         return vi;
     }
     @Override
@@ -63,7 +55,6 @@ public class HomeFragment extends Fragment {
         super.onStart();
         adapter.startListening();
     }
-
     @Override
     public  void onStop() {
         super.onStop();

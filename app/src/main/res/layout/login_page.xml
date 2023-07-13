@@ -15,6 +15,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="00dp"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
@@ -22,12 +23,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="00dp"
+
         android:gravity="center"
         android:textColor="#FFFFFF"
         android:text="@string/login"
-
         android:textSize="24sp"
         android:textStyle="bold" />
     <com.google.android.material.textfield.TextInputLayout
@@ -50,6 +49,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:id="@+id/password"
+
           />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_button"
+        android:layout_marginBottom="195dp"
         android:id="@+id/login_button"
         android:layout_marginTop="15sp"
 
@@ -71,14 +72,14 @@
         android:text="Don't have an account? Sign Up"
         android:textColor="#FEFEFE" />
 
-    <TextView
-        android:id="@+id/click_to_signin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15sp"
-        android:layout_marginBottom="200dp"
-        android:text="Sign in with Google"
-        android:textColor="#FEFEFE" />
+<!--    <TextView-->
+<!--        android:id="@+id/click_to_signin"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="15sp"-->
+<!--        android:layout_marginBottom="200dp"-->
+<!--        android:text="Sign in with Google"-->
+<!--        android:textColor="#FEFEFE" />-->
 
 
 

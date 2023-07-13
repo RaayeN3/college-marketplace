@@ -22,14 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Signup extends AppCompatActivity {
-
     TextInputEditText emailText,passwordText,nameText,phoneText;
     Button button_signup;
     FirebaseAuth mAuth;
     DatabaseReference userdbref;
-//    TextView textView;
     String userId;
-
     @Override
     public void onStart() {
         super.onStart();
@@ -41,7 +38,6 @@ public class Signup extends AppCompatActivity {
             finish();
         }
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +100,6 @@ public class Signup extends AppCompatActivity {
                                 }
                             }
                         });
-
             }
         });
 
