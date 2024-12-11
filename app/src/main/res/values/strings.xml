@@ -17,4 +17,12 @@
     <string name="add_button">Add</string>
     <string name="full_name">Full Name</string>
     <string name="phone_no">Phone no</string>
+    <string name="your_account_details">Your Account Details</string>
+    <string name="todo">TODO</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_description">Product Description</string>
+    <string name="product_price">Product Price</string>
+    <string name="call_seller">Call Seller</string>
+    <string name="todo2">TODO</string>
+    <string name="add_a_new_item">Add a new item</string>
 </resources>

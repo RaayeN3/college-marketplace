@@ -25,16 +25,12 @@ public class myadapter extends FirebaseRecyclerAdapter<Item,myadapter.myviewhold
         holder.productname.setText(model.getName());
         holder.productdescription.setText(model.getDescription());
         holder.productprice.setText(model.getPrice());
-        String num=model.getNumber();
         Glide.with(holder.img1.getContext()).load(model.getUrlimg()).into(holder.img1);
 
-            holder.img1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AppCompatActivity activity=(AppCompatActivity)view.getContext();
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new descFragment(model.getUrlimg(),model.getName(),model.getDescription(),model.getPrice(), model.getNumber())).addToBackStack(null).commit();
+            holder.img1.setOnClickListener(view -> {
+                AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new descFragment(model.getUrlimg(),model.getName(),model.getDescription(),model.getPrice(), model.getNumber())).addToBackStack(null).commit();
 
-                }
             });
 
     }
@@ -46,7 +42,7 @@ public class myadapter extends FirebaseRecyclerAdapter<Item,myadapter.myviewhold
         return new myviewholder(view);
     }
 
-    public class myviewholder extends RecyclerView.ViewHolder{
+    public static class myviewholder extends RecyclerView.ViewHolder{
 
         ImageView img1;
         TextView productname,productdescription,productprice;

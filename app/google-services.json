@@ -1,36 +1,46 @@
 {
   "project_info": {
-    "project_number": "627605724804",
-    "project_id": "trialapp-89757",
-    "storage_bucket": "trialapp-89757.appspot.com"
+    "project_number": "125907385988",
+    "firebase_url": "https://mobile-e5c10-default-rtdb.firebaseio.com",
+    "project_id": "mobile-e5c10",
+    "storage_bucket": "mobile-e5c10.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:627605724804:android:ae34c94c9d6b5c43926cd1",
+        "mobilesdk_app_id": "1:125907385988:android:ea3970f14553e082500cd1",
         "android_client_info": {
-          "package_name": "com.example.trialapp"
+          "package_name": "Mobiile.COURS"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "627605724804-7gvi5029omes3iimlvkq7te488upc4d0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD2rT7vRbAz1hRhF8jFNY9FKpzQo_z5j0w"
+          "current_key": "AIzaSyBreQ9vVEENh9bkc3KH0iqrkHjjsrUg9fA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "627605724804-7gvi5029omes3iimlvkq7te488upc4d0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125907385988:android:e5226aede425e95d500cd1",
+        "android_client_info": {
+          "package_name": "com.example.trialapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBreQ9vVEENh9bkc3KH0iqrkHjjsrUg9fA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

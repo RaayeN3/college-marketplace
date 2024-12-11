@@ -15,19 +15,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/page_title"
-            android:text="Add a new item"
+            android:text="@string/add_a_new_item"
             android:textSize="30sp"
             android:textStyle="bold"
             />
+
         <ImageButton
+            android:id="@+id/save_btn"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:id="@+id/save_btn"
-            android:src="@drawable/baseline_done_24"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            app:tint="@color/white"/>
+            android:contentDescription="@string/account_settings"
+            android:src="@drawable/baseline_done_24"
+            app:tint="@color/white" />
 
     </RelativeLayout>
 

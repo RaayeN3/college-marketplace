@@ -15,6 +15,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/white"
+        android:contentDescription="@string/todo2"
         android:src="@drawable/baseline_add_24"
         />
 
