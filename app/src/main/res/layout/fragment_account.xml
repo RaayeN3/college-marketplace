@@ -38,7 +38,9 @@
         android:layout_marginTop="120dp"
         android:text=""
         android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:gravity="center"
+        />
 
     <Button
         android:id="@+id/logout"
