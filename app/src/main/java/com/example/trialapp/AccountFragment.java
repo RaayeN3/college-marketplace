@@ -59,6 +59,7 @@ public class AccountFragment extends Fragment {
                         name.setText("Name: " + (namefb != null ? namefb : "N/A"));
                         phone.setText("Phone Number: " + (phoneNumber != null ? phoneNumber : "N/A"));
                     } else {
+                        //si les donnees utilisateurs sont introuvables
                         Toast.makeText(getContext(), "User data not found", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -70,7 +71,7 @@ public class AccountFragment extends Fragment {
             });
         }
 
-        // Logout button logic
+        //loqique pour deconnecter l'utilisateur
         button.setOnClickListener(view -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getActivity(), Login.class);
