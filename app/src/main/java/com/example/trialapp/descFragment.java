@@ -15,28 +15,25 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
-import java.util.Objects;
-
 public class descFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    String url,name,descr,price, phonenum;
-    Button call;
+    private String url, name, descr, price, phonenum;
+    private Button call, plus, minus;
+    private TextView quantityTextView;
+    private int quantity = 0; // Initial quantity
 
     public descFragment() {
-
     }
-    public descFragment(String url,String name,String descr,String price,String phonenum) {
-        this.url=url;
-        this.name=name;
-        this.descr=descr;
-        this.price=price;
-        this.phonenum = phonenum;
 
+    public descFragment(String url, String name, String descr, String price, String phonenum) {
+        this.url = url;
+        this.name = name;
+        this.descr = descr;
+        this.price = price;
+        this.phonenum = phonenum;
     }
 
     public static descFragment newInstance(String param1, String param2) {
@@ -52,7 +49,6 @@ public class descFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            // TODO: Rename and change types of parameters
             String mParam1 = getArguments().getString(ARG_PARAM1);
             String mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -62,21 +58,51 @@ public class descFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View vi= inflater.inflate(R.layout.fragment_desc, container, false);
-        ImageView imageholder=vi.findViewById(R.id.imagegholder);
-        TextView nameholder=vi.findViewById(R.id.nameholder);
-        TextView descriptionholder=vi.findViewById(R.id.descriptionholder);
-        TextView priceholder=vi.findViewById(R.id.priceholder);
+        View vi = inflater.inflate(R.layout.fragment_desc, container, false);
+        ImageView imageholder = vi.findViewById(R.id.imagegholder);
+        TextView nameholder = vi.findViewById(R.id.nameholder);
+        TextView descriptionholder = vi.findViewById(R.id.descriptionholder);
+        TextView priceholder = vi.findViewById(R.id.priceholder);
+        quantityTextView = vi.findViewById(R.id.textView);
 
         call = vi.findViewById(R.id.call_button);
+        plus = vi.findViewById(R.id.plus);
+        minus = vi.findViewById(R.id.minus);
 
+        // Set initial quantity
+        quantityTextView.setText(String.valueOf(quantity));
+
+        // Call button functionality
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL); intent.setData(Uri.parse("tel:" + phonenum)); startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phonenum));
+                startActivity(intent);
             }
         });
 
+        // Plus button functionality
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quantity++;
+                quantityTextView.setText(String.valueOf(quantity));
+            }
+        });
+
+        // Minus button functionality
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (quantity > 0) { // Ensure quantity doesn't go below 0
+                    quantity--;
+                }
+                quantityTextView.setText(String.valueOf(quantity));
+            }
+        });
+
+        // Set data for views
         nameholder.setText(name);
         descriptionholder.setText(descr);
         priceholder.setText(price);
@@ -84,11 +110,9 @@ public class descFragment extends Fragment {
         return vi;
     }
 
-    public void onBackPressed(){
-
-        AppCompatActivity activity=(AppCompatActivity)getContext();
+    public void onBackPressed() {
+        AppCompatActivity activity = (AppCompatActivity) getContext();
         assert activity != null;
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new HomeFragment()).addToBackStack(null).commit();
-
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment()).addToBackStack(null).commit();
     }
 }

@@ -26,7 +26,7 @@
     <string name="todo2">TODO</string>
     <string name="add_a_new_item">Add a new item</string>
     <string name="home">Home</string>
-    <string name="my_ads">My Ads</string>
+    <string name="my_ads">All products</string>
     <string name="account">Account</string>
     <string name="product_name2">Product Name</string>
     <string name="product_description2">Product Description</string>
@@ -45,4 +45,7 @@
     <string name="demo_price2">Demo Price</string>
     <string name="todo7">TODO</string>
     <string name="chat">Chat</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="qt">0</string>
 </resources>
