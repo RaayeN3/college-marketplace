@@ -16,6 +16,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:contentDescription="@string/todo7"
             android:src="@mipmap/ic_launcher"
             android:layout_centerHorizontal="true"
             android:id="@+id/img1"/>
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/productname"
-            android:text="Demo Name"
+            android:text="@string/demo_name2"
 
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/productdescription"
-            android:text="Demo Description"
+            android:text="@string/demo_description2"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
             android:textColor="#000"
@@ -49,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/productprice"
-            android:text="Demo Price"
+            android:text="@string/demo_price2"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:textSize="23sp"

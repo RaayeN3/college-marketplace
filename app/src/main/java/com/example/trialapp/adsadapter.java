@@ -46,7 +46,7 @@ public class adsadapter extends FirebaseRecyclerAdapter<Item,adsadapter.myviewho
         return new myviewholder(view);
     }
 
-    public class myviewholder extends RecyclerView.ViewHolder{
+    public static class myviewholder extends RecyclerView.ViewHolder{
 
         ImageView img1;
         TextView productname,productdescription,productprice;

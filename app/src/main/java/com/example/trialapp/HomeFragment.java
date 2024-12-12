@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -34,10 +35,10 @@ public class HomeFragment extends Fragment {
         });
 
         rv=(RecyclerView)vi.findViewById(R.id.rcview);
-        //rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        //rv.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        rv.setLayoutManager(layoutManager);
 
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),2);
         rv.setLayoutManager(gridLayoutManager);

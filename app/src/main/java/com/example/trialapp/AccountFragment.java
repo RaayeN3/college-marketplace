@@ -1,5 +1,6 @@
 package com.example.trialapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,79 +21,63 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
 
 public class AccountFragment extends Fragment {
 
-    FirebaseAuth auth;
-
-    TextView name, phone;
-    Button button;
-    //    TextView textView;
-    FirebaseUser user;
-
+    private TextView name, phone;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_account, container, false);
 
-        auth = FirebaseAuth.getInstance();
-        button = v.findViewById(R.id.logout);
-
-        name =v.findViewById(R.id.name);
+        // Initialize Firebase Auth and UI components
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        Button button = v.findViewById(R.id.logout);
+        name = v.findViewById(R.id.name);
         phone = v.findViewById(R.id.phone);
 
-        String uid =auth.getCurrentUser().getUid();
+        // Fetch current user's UID
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
 
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
-        usersRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String namefb = dataSnapshot.child("fullname").getValue(String.class);
-                    String phoneNumber = dataSnapshot.child("phonenumber").getValue(String.class);
-                    name.setText("Name : "+namefb);
-                    phone.setText("Phone Number : "+phoneNumber);
+            // Reference to the "users" node in the database
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+            usersRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String namefb = dataSnapshot.child("fullname").getValue(String.class);
+                        String phoneNumber = dataSnapshot.child("phonenumber").getValue(String.class);
+
+                        // Update the UI with fetched data
+                        name.setText("Name: " + (namefb != null ? namefb : "N/A"));
+                        phone.setText("Phone Number: " + (phoneNumber != null ? phoneNumber : "N/A"));
+                    } else {
+                        Toast.makeText(getContext(), "User data not found", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),"error in loading", Toast.LENGTH_SHORT);
-            }
-        });
 
-
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                user = auth.getCurrentUser();
-                if (user == null) {
-                    Intent intent = new Intent(getActivity(), Login.class);
-                    startActivity(intent);
-
-                } else {
-//            textView.setText(user.getEmail());
-//                    button.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getActivity(), Login.class);
-                    startActivity(intent);
-                    getActivity().finish();
-
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getContext(), "Error loading data", Toast.LENGTH_SHORT).show();
                 }
-            }
+            });
+        }
+
+        // Logout button logic
+        button.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getActivity(), Login.class);
+            startActivity(intent);
+            requireActivity().finish(); // Ensure the current activity is removed from the back stack
         });
 
         return v;
     }
-            }
-
-//        );
-
-        // Inflate the layout for this fragment
-//        return v;
-//    }
-//        }
+}

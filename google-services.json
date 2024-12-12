@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "784151649990",
+    "firebase_url": "https://ownit-ab481-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "ownit-ab481",
+    "storage_bucket": "ownit-ab481.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784151649990:android:06ed4564ad84e46f8b41c7",
+        "android_client_info": {
+          "package_name": "essths.li3.ownit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCluLjTWdDwjBS5CdzU_w-xKsGhXoeu0oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784151649990:android:b28e9f4547301fc68b41c7",
+        "android_client_info": {
+          "package_name": "sdvsdvdsvd6264.hbkb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCluLjTWdDwjBS5CdzU_w-xKsGhXoeu0oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

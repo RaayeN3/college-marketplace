@@ -18,7 +18,7 @@
             android:text="@string/add_a_new_item"
             android:textSize="30sp"
             android:textStyle="bold"
-            />
+            tools:ignore="RelativeOverlap" />
 
         <ImageButton
             android:id="@+id/save_btn"
@@ -46,8 +46,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/item_name"
-            android:hint="Product Name"
+            android:autofillHints=""
+            android:hint="@string/product_name2"
             android:textSize="20sp"
+            android:inputType="textMultiLine"
             android:textStyle="bold"
             android:layout_marginVertical="8dp"
             android:padding="12dp" />
@@ -55,7 +57,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/item_desc"
-            android:hint="Product Description"
+            android:autofillHints=""
+            android:hint="@string/product_description2"
+            android:inputType="textMultiLine"
             android:minLines="4"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -67,7 +71,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/item_price"
-            android:hint="Product Price"
+            android:autofillHints=""
+            android:hint="@string/product_price2"
+            android:inputType="textMultiLine"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginVertical="8dp"
@@ -78,17 +84,18 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/item_img"
+            android:contentDescription="@string/todo3"
             android:src="@drawable/baseline_add_photo_alternate_24"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             app:tint="@color/white"
             android:layout_gravity="center"
 
             />
-<!--        <ProgressBar-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:paddingTop="16dp"-->
+<!--      <ProgressBar-->
+<!--          android:layout_width="wrap_content"-->
+<!--          android:layout_height="match_parent"-->
+<!--           android:layout_gravity="center"-->
+<!--          android:paddingTop="16dp"-->
 <!--            android:id="@+id/prog"-->
 <!--            />-->
 

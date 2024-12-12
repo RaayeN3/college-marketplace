@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class Signup extends AppCompatActivity {
     TextInputEditText emailText,passwordText,nameText,phoneText;
     Button button_signup;
@@ -77,7 +79,7 @@ public class Signup extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Toast.makeText(Signup.this, "Account created", Toast.LENGTH_SHORT).show();
-                                    userId=mAuth.getCurrentUser().getUid();
+                                    userId= Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                                     userdbref.child(userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {

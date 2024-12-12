@@ -13,8 +13,5 @@ public class Users {
         return fullname;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
-    }
 }
 

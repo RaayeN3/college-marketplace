@@ -3,8 +3,10 @@ package com.example.trialapp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +34,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Objects;
+
 public class Item_Details extends AppCompatActivity {
 
     EditText prod_name,prod_desc,prod_price;
@@ -46,6 +57,7 @@ public class Item_Details extends AppCompatActivity {
 //    StorageReference img_ref;
 //
     Uri uri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +80,10 @@ public class Item_Details extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK){
                             Intent data = result.getData();
+                            assert data != null;
                             uri = data.getData();
                             img_up.setImageURI(uri);
+
                         } else {
                             Toast.makeText(Item_Details.this, "No Image Selected", Toast.LENGTH_SHORT).show();
                         }
@@ -93,59 +107,107 @@ public class Item_Details extends AppCompatActivity {
             }
         });
     }
-    public void saveData(){
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Android Images")
-                .child(uri.getLastPathSegment());
-        AlertDialog.Builder builder = new AlertDialog.Builder(Item_Details.this);
-        builder.setCancelable(false);
-        //builder.setView(R.layout.progress_layout);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete());
-                Uri urlImage = uriTask.getResult();
-                imgurl = urlImage.toString();
-                uploadData();
-                dialog.dismiss();
+    public void saveData() {
+        if (uri == null) {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            // Get the current user's UID from Firebase Authentication
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            // Get the image name from the URI (or default name if not available)
+            String imageName = getImageNameFromUri(uri);
+
+            // Combine the user ID and image name to create a unique file name
+            String fileName = userId + "_" + imageName;
+
+            // Create the file in the internal storage
+            File file = new File(getFilesDir(), fileName);
+
+            // Open input and output streams
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            OutputStream outputStream = Files.newOutputStream(file.toPath());
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            // Copy bytes from input stream to output stream
+            while (true) {
+                assert inputStream != null;
+                if ((bytesRead = inputStream.read(buffer)) == -1) break;
+                outputStream.write(buffer, 0, bytesRead);
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-            }
-        });
+
+            // Close streams
+            inputStream.close();
+            outputStream.close();
+
+            // Update imgurl with the file path for future use
+            imgurl = file.getAbsolutePath();
+
+            Toast.makeText(this, "Image saved locally: " + imgurl, Toast.LENGTH_SHORT).show();
+
+            // Proceed with uploading data or any further logic
+            uploadData();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to save image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
+    private String getImageNameFromUri(Uri uri) {
+        // Try to extract the display name from the content resolver
+        if (uri.getScheme() != null && uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                try {
+                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (nameIndex != -1 && cursor.moveToFirst()) {
+                        return cursor.getString(nameIndex);
+                    }
+                } finally {
+                    ((Cursor) cursor).close();
+                }
+            }
+        }
 
-//    void add_item(){
-//        String item_n=prod_name.getText().toString();
-//        String item_d=prod_desc.getText().toString();
-//        String item_p=prod_price.getText().toString();
-//
-//        if(item_n==null||item_n.isEmpty()){
-//            prod_name.setError("Product name required");
-//            return;
-//        }
-//        if(item_p==null||item_p.isEmpty()){
-//            prod_name.setError("Product price required");
-//            return;
-//        }
-//
-//        Item item=new Item();
-//        item.setName(item_n);
-//        item.setDescription(item_d);
-//        item.setPrice(item_p);
-//
-//        itemdbref.push().setValue(item);
-//        Toast.makeText(Item_Details.this,"Item added",Toast.LENGTH_SHORT).show();
+        // Fallback to extracting the last path segment
+        if (uri.getPath() != null) {
+            return new File(uri.getPath()).getName();
+        }
+
+        // Default name if all else fails
+        return "default_image_name";
+    }
+
+   void add_item(){
+       String item_n=prod_name.getText().toString();
+        String item_d=prod_desc.getText().toString();
+        String item_p=prod_price.getText().toString();
+        if(item_n.isEmpty()){
+            prod_name.setError("Product name required");
+            return;
+        }
+       if(item_p.isEmpty()){
+            prod_name.setError("Product price required");
+            return;
+        }
+
+        Item item=new Item();
+        item.setName(item_n);
+        item.setDescription(item_d);
+        item.setPrice(item_p);
+
+        itemdbref.push().setValue(item);
+       Toast.makeText(Item_Details.this,"Item added",Toast.LENGTH_SHORT).show();}
 public void uploadData(){
     String item_n=prod_name.getText().toString();
     String item_d=prod_desc.getText().toString();
     String item_p=prod_price.getText().toString();
-    String get_uid=auth.getCurrentUser().getUid();
+    String get_uid= Objects.requireNonNull(auth.getCurrentUser()).getUid();
     DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
     usersRef.child(get_uid).addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
@@ -165,14 +227,14 @@ public void uploadData(){
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Item_Details.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Item_Details.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
             }
         }
         public void onCancelled(@NonNull DatabaseError databaseError) {
-            Toast.makeText(getApplicationContext(),"error in loading", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(),"error in loading", Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -180,7 +242,7 @@ public void uploadData(){
 
 
 
-//    String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+    String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
 
     }

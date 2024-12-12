@@ -25,4 +25,24 @@
     <string name="call_seller">Call Seller</string>
     <string name="todo2">TODO</string>
     <string name="add_a_new_item">Add a new item</string>
+    <string name="home">Home</string>
+    <string name="my_ads">My Ads</string>
+    <string name="account">Account</string>
+    <string name="product_name2">Product Name</string>
+    <string name="product_description2">Product Description</string>
+    <string name="product_price2">Product Price</string>
+    <string name="todo3">TODO</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up</string>
+    <string name="todo4">TODO</string>
+    <string name="todo5">TODO</string>
+    <string name="full_name2">Full Name</string>
+    <string name="todo6">TODO</string>
+    <string name="demo_name">Demo Name</string>
+    <string name="demo_description">Demo Description</string>
+    <string name="demo_price">Demo Price</string>
+    <string name="demo_name2">Demo Name</string>
+    <string name="demo_description2">Demo Description</string>
+    <string name="demo_price2">Demo Price</string>
+    <string name="todo7">TODO</string>
+    <string name="chat">Chat</string>
 </resources>
